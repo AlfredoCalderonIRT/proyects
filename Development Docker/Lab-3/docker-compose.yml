@@ -1,0 +1,45 @@
+services:
+  api:
+    build:
+      context: ./FastAPI
+      dockerfile: Dockerfile
+    container_name: fastapi
+    networks:
+      mi_red:
+        ipv4_address: 172.18.0.10
+    depends_on:
+      - mysql-master
+      - mysql-slave
+
+  mysql-master:
+    build:
+      context: ./MySQL-Master
+      dockerfile: Dockerfile
+    container_name: mysql_master
+    networks:
+      mi_red:
+        ipv4_address: 172.18.0.20
+    volumes:
+      - mysql_master_data:/var/lib/mysql
+
+  mysql-slave:
+    build:
+      context: ./MySQL-Slave
+      dockerfile: Dockerfile
+    container_name: mysql_slave
+    networks:
+      mi_red:
+        ipv4_address: 172.18.0.30
+    volumes:
+      - mysql_slave_data:/var/lib/mysql
+
+networks:
+  mi_red:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
+volumes:
+  mysql_master_data:
+  mysql_slave_data:

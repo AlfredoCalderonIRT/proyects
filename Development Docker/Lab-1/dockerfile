@@ -1,0 +1,14 @@
+FROM ubuntu
+
+RUN apt update; apt upgrade -y; apt install -y python3 nano
+
+RUN mkdir code
+
+COPY /code/app.py app.py  
+
+
+ENTRYPOINT [ "python3" ]
+
+CMD [ "/code/app.py" ]
+
+
