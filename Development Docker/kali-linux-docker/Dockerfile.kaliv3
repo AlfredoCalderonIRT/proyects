@@ -1,4 +1,4 @@
-FROM kali-linux:latest
+FROM kali-linux:v3
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -12,6 +12,6 @@ RUN apt-get update && \
 
 WORKDIR /root
 
-VOLUME ["/data"]
+VOLUME ["/root"]
 
 CMD ["/bin/bash"]
